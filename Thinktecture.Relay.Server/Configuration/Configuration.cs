@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Configuration;
-using NLog.Interface;
+using NLog;
 
 namespace Thinktecture.Relay.Server.Configuration
 {
@@ -12,6 +12,7 @@ namespace Thinktecture.Relay.Server.Configuration
         public int LinkPasswordLength { get; private set; }
         public int DisconnectTimeout { get; private set; }
         public int ConnectionTimeout { get; private set; }
+        public int KeepAliveInterval { get; private set; }
         public bool UseInsecureHttp { get; private set; }
         public bool EnableManagementWeb { get; private set; }
         public bool EnableRelaying { get; private set; }
@@ -54,6 +55,12 @@ namespace Thinktecture.Relay.Server.Configuration
             if (Int32.TryParse(ConfigurationManager.AppSettings["DisconnectTimeout"], out tmpInt))
             {
                 DisconnectTimeout = tmpInt;
+            }
+
+            KeepAliveInterval = DisconnectTimeout / 3;
+            if (Int32.TryParse(ConfigurationManager.AppSettings["KeepAliveInterval"], out tmpInt))
+            {
+                KeepAliveInterval = tmpInt;
             }
 
             HostName = ConfigurationManager.AppSettings["HostName"] ?? "+";

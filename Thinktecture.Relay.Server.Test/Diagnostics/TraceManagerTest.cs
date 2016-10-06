@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using NLog.Interface;
+using NLog;
 using Thinktecture.Relay.OnPremiseConnector.OnPremiseTarget;
 using Thinktecture.Relay.Server.Configuration;
 using Thinktecture.Relay.Server.OnPremise;
@@ -21,7 +21,7 @@ namespace Thinktecture.Relay.Server.Diagnostics
 	[TestClass]
 	public class TraceManagerTest
 	{
-		private class OnPremiseTargetReponse : IOnPremiseTargetReponse
+		private class OnPremiseTargetResponse : IOnPremiseTargetResponse
 		{
 			public string RequestId { get; set; }
 			public string OriginId { get; set; }
@@ -40,6 +40,7 @@ namespace Thinktecture.Relay.Server.Diagnostics
 		    public int LinkPasswordLength { get; private set; }
 		    public int DisconnectTimeout { get; private set; }
 		    public int ConnectionTimeout { get; private set; }
+		    public int KeepAliveInterval { get; private set; }
 		    public bool UseInsecureHttp { get; private set; }
 		    public bool EnableManagementWeb { get; private set; }
 		    public bool EnableRelaying { get; private set; }
@@ -99,7 +100,7 @@ namespace Thinktecture.Relay.Server.Diagnostics
 				},
 				Body = new byte[] { 65, 66, 67 }
 			};
-			var onPremiseTargetResponse = new OnPremiseTargetReponse()
+			var onPremiseTargetResponse = new OnPremiseTargetResponse()
 			{
 				HttpHeaders = new Dictionary<string, string>
 				{
@@ -141,7 +142,7 @@ namespace Thinktecture.Relay.Server.Diagnostics
 				},
 				Body = new byte[] { 65, 66, 67 }
 			};
-			var onPremiseTargetResponse = new OnPremiseTargetReponse()
+			var onPremiseTargetResponse = new OnPremiseTargetResponse()
 			{
 				HttpHeaders = new Dictionary<string, string>
 				{
@@ -192,7 +193,7 @@ namespace Thinktecture.Relay.Server.Diagnostics
 				},
 				Body = new byte[] { 65, 66, 67 }
 			};
-			var onPremiseTargetResponse = new OnPremiseTargetReponse()
+			var onPremiseTargetResponse = new OnPremiseTargetResponse()
 			{
 				HttpHeaders = new Dictionary<string, string>
 				{
@@ -206,7 +207,7 @@ namespace Thinktecture.Relay.Server.Diagnostics
 			var exception = new Exception();
 
 			traceFileWriterMock.Setup(t => t.WriteContentFile(It.IsAny<string>(), clientRequest.Body)).Throws(exception);
-			loggerMock.Setup(l => l.Warn(It.IsAny<string>(), exception));
+			loggerMock.Setup(l => l.Warn(exception, It.IsAny<string>()));
 
 			sut.Trace(clientRequest, onPremiseTargetResponse, traceConfigurationId);
 
@@ -279,7 +280,7 @@ namespace Thinktecture.Relay.Server.Diagnostics
 		    await traceFileWriter.WriteHeaderFile("tracefiles/" + filePrefix2 + ".crxxxxxxx.headers", clientHeaders);
 		    await traceFileWriter.WriteHeaderFile("tracefiles/" + filePrefix2 + ".ltrxxxxxxx.headers", onPremiseTargetHeaders);
             
-		    loggerMock.Setup(l => l.Warn(It.IsAny<string>(), It.IsAny<Exception>()));
+		    loggerMock.Setup(l => l.Warn(It.IsAny<Exception>(), It.IsAny<string>(), It.IsAny<object[]>()));
 
 			result = await sut.GetTracesAsync(Guid.Parse("7975999f-54d9-4b21-a093-4502ea372723"));
 

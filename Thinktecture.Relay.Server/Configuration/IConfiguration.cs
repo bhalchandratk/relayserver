@@ -10,6 +10,7 @@ namespace Thinktecture.Relay.Server.Configuration
         int LinkPasswordLength { get; }
         int DisconnectTimeout { get; }
         int ConnectionTimeout { get; }
+        int KeepAliveInterval { get; }
         bool UseInsecureHttp { get; }
         bool EnableManagementWeb { get; }
         bool EnableRelaying { get; }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinktecture.Relay.Server", "Thinktecture.Relay.Server\Thinktecture.Relay.Server.csproj", "{41EECED0-E7C6-4C7C-8B7D-9B6A33DA0150}"
 EndProject
@@ -12,11 +12,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinktecture.Relay.OnPremiseConnector", "Thinktecture.Relay.OnPremiseConnector\Thinktecture.Relay.OnPremiseConnector.csproj", "{63D02790-C22D-479B-BC30-1A45F2B832E8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinktecture.Relay.OnPremiseConnectorService", "Thinktecture.Relay.OnPremiseConnectorService\Thinktecture.Relay.OnPremiseConnectorService.csproj", "{FEDA9154-6CF6-4D24-B3BD-731EE0C646F4}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7286C586-743A-443C-BF95-5394EE8E49F4}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\packages.config = .nuget\packages.config
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
